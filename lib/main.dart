@@ -1,8 +1,9 @@
+import 'dart:developer';
+
 import 'package:dynamic_theme/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:provider/provider.dart';
-import 'package:material_color_generator/material_color_generator.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 void main() {
@@ -20,9 +21,7 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
-  late ThemeData light;
-  late ThemeData dark;
-
+  
   final urlImages = ["assets/light.webp", "assets/dark.webp"];
   late List<PaletteColor> colors;
   late int _currentindex;
@@ -58,33 +57,20 @@ class _MainAppState extends State<MainApp> {
         return MaterialApp(
           title: 'Flutter Demo',
           debugShowCheckedModeBanner: false,
-          theme: state.darkTheme
-              ? dark = ThemeData(
+          themeMode: _currentindex==0?ThemeMode.light:ThemeMode.dark,
+          theme: ThemeData(
+                  appBarTheme: AppBarTheme(color: lightred),
+                  colorScheme: ColorScheme.fromSeed(seedColor: lightred, brightness: Brightness.light,)
+                ),
+             darkTheme:ThemeData(
                   appBarTheme: AppBarTheme(color: darkred),
-                  colorScheme: const ColorScheme.dark().copyWith(
-                    secondary: darkpink,
-                    brightness: Brightness.dark,
-                  ),
-                  scaffoldBackgroundColor: colors.isNotEmpty
-                      ? colors[_currentindex = 1].color
-                      : darkred,
-                )
-              : light = ThemeData(
-                  colorScheme: ColorScheme.fromSwatch(
-                    primarySwatch: generateMaterialColor(color: lightred),
-                  ).copyWith(
-                    secondary: lightpink,
-                    brightness: Brightness.light,
-                  ),
-                  scaffoldBackgroundColor: colors.isNotEmpty
-                      ? colors[_currentindex].color
-                      : lightindigo),
+                  colorScheme: ColorScheme.fromSeed(seedColor: darkred,brightness: Brightness.dark,)
+                ) ,   
           home: Scaffold(
             appBar: AppBar(
               title: state.darkTheme
                   ? Text("Color Picker (Dark Theme)")
                   : Text(widget.title),
-              backgroundColor: Theme.of(context).primaryColor,
             ),
             body: GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -113,8 +99,14 @@ class _MainAppState extends State<MainApp> {
                         alignment: Alignment.bottomCenter,
                         padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                         child: index == 0
-                            ? const Text('Light Theme')
-                            : const Text('Dark Theme'),
+                            ? const Text(
+                                'Light Theme',
+                                style: TextStyle(fontSize: 20),
+                              )
+                            : const Text(
+                                'Dark Theme',
+                                style: TextStyle(fontSize: 20),
+                              ),
                       )
                     ],
                   ),
@@ -132,13 +124,16 @@ class _MainAppState extends State<MainApp> {
 
   Widget buildappbarbackgroundColorPicker(index) => MaterialPicker(
         pickerColor: index != 0 ? darkred : lightred,
-        onColorChanged: (Color color) => setState(() {
-          if (index != 0) {
-            darkred = color;
-          } else {
-            lightred = color;
-          }
-        }),
+        onColorChanged: (index) {},
+        onPrimaryChanged: (Color color) {
+          setState(() {
+            if (index != 0) {
+              darkred = color;
+            } else {
+              lightred = color;
+            }
+          });
+        },
       );
 
   Widget buildbackgroundColorPicker(index) => MaterialPicker(
