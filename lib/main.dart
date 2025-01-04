@@ -1,8 +1,5 @@
-import 'dart:developer';
-
 import 'package:dynamic_theme/themes.dart';
 import 'package:flutter/material.dart';
-import 'package:palette_generator/palette_generator.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
@@ -23,7 +20,7 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> {
   
   final urlImages = ["assets/light.webp", "assets/dark.webp"];
-  late List<PaletteColor> colors;
+ 
   late int _currentindex;
   Color lightindigo = Colors.indigo;
   Color lightpink = Colors.pink;
@@ -35,18 +32,13 @@ class _MainAppState extends State<MainApp> {
   @override
   void initState() {
     super.initState();
-    colors = [];
+  
     _currentindex = 0;
     _updatepalettes();
   }
 
   _updatepalettes() async {
-    for (String image in urlImages) {
-      final PaletteGenerator pg = await PaletteGenerator.fromImageProvider(
-          AssetImage(image),
-          size: const Size(200, 200));
-      colors.add(pg.dominantColor ?? PaletteColor(Colors.blue, 2));
-    }
+ 
     setState(() {});
   }
 

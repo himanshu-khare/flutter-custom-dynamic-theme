@@ -11,8 +11,6 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_colorpicker: ^1.1.0
-  material_color_generator: ^1.1.0
-  palette_generator: ^0.3.3+5
   provider: ^6.1.2
   shared_preferences: ^2.3.4
 
