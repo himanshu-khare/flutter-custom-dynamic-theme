@@ -5,13 +5,11 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 void main() {
   runApp(const MainApp(
-    title: "Color picker (Light Theme)",
   ));
 }
 
 class MainApp extends StatefulWidget {
-  const MainApp({super.key, required this.title});
-  final String title;
+  const MainApp({super.key, });
 
   @override
   State<MainApp> createState() => _MainAppState();
@@ -62,7 +60,7 @@ class _MainAppState extends State<MainApp> {
             appBar: AppBar(
               title: state.darkTheme
                   ? Text("Color Picker (Dark Theme)")
-                  : Text(widget.title),
+                  : Text("Color picker (Light Theme)"),
             ),
             body: GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
